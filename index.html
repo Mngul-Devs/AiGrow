@@ -20,7 +20,6 @@
             position: relative;
         }
 
-        /* Animated background particles */
         .particles {
             position: absolute;
             width: 100%;
@@ -52,6 +51,22 @@
             padding: 30px;
             position: relative;
             z-index: 1;
+        }
+
+        .page {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        .page.active {
+            display: flex;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         header {
@@ -169,6 +184,26 @@
             font-weight: 300;
         }
 
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
         footer {
             text-align: center;
             padding: 15px;
@@ -178,7 +213,6 @@
             letter-spacing: 1px;
         }
 
-        /* Spotlight effect */
         .spotlight {
             position: fixed;
             width: 600px;
@@ -188,6 +222,99 @@
             transform: translate(-50%, -50%);
             transition: all 0.1s ease;
             z-index: 0;
+        }
+
+        /* Solutions Page Styles */
+        .solutions-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(100vh - 250px);
+        }
+
+        .solutions-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .solutions-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .solutions-content::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 10px;
+        }
+
+        .solution-step {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .solution-step:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .solution-step h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .solution-step h3 {
+            color: #a0aec0;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .solution-step p {
+            color: #cbd5e0;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .solution-step ul {
+            color: #cbd5e0;
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 1200px) {
@@ -205,6 +332,7 @@
             }
             h1 { font-size: 2.5rem; }
             .feature-card p { font-size: 0.7rem; }
+            .solutions-content { max-height: calc(100vh - 300px); }
         }
     </style>
 </head>
@@ -213,78 +341,206 @@
     <div class="spotlight" id="spotlight"></div>
     
     <div class="container">
-        <header>
-            <div class="logo-container">
-                <h1>🌱 AiGrow</h1>
-            </div>
-            <p class="tagline">Next-Gen AI Automation</p>
-        </header>
+        <!-- Home Page -->
+        <div class="page active" id="homePage">
+            <header>
+                <div class="logo-container">
+                    <h1>🌱 AiGrow</h1>
+                </div>
+                <p class="tagline">Next-Gen AI Automation</p>
+            </header>
 
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>Multi-Platform</h3>
-                <p>WhatsApp, Facebook, Telegram - all in one unified interface</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Multi-Platform</h3>
+                    <p>WhatsApp, Facebook, Telegram - all in one unified interface</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI Analysis</h3>
+                    <p>Deep learning models analyze text, images, audio & video</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Smart Memory</h3>
+                    <p>Contextual conversations with intelligent data persistence</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Multi-User Broadcast</h3>
+                    <p>Simultaneous delivery to unlimited recipients</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>API Powerhouse</h3>
+                    <p>Webhooks, REST APIs, and seamless integrations</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Voice-activated Google Calendar reminders</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Live Analytics</h3>
+                    <p>Real-time data visualization with custom metrics</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Vision AI</h3>
+                    <p>CCTV plant health monitoring with instant diagnosis</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔮</div>
+                    <h3>Predictive Engine</h3>
+                    <p>ML-powered forecasting from IoT sensor data</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Auto Finance</h3>
+                    <p>Intelligent calculation of revenue, tax & profitability</p>
+                </div>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <h3>AI Analysis</h3>
-                <p>Deep learning models analyze text, images, audio & video</p>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <button class="cta-button" onclick="showSolutions()">Database Solution 💾</button>
+                <button class="cta-button" onclick="showN8nSolutions()">n8n Workflow 🔄</button>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">💾</div>
-                <h3>Smart Memory</h3>
-                <p>Contextual conversations with intelligent data persistence</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">👥</div>
-                <h3>Multi-User Broadcast</h3>
-                <p>Simultaneous delivery to unlimited recipients</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🔗</div>
-                <h3>API Powerhouse</h3>
-                <p>Webhooks, REST APIs, and seamless integrations</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">⏰</div>
-                <h3>Smart Scheduling</h3>
-                <p>Voice-activated Google Calendar reminders</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Live Analytics</h3>
-                <p>Real-time data visualization with custom metrics</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🌿</div>
-                <h3>Vision AI</h3>
-                <p>CCTV plant health monitoring with instant diagnosis</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🔮</div>
-                <h3>Predictive Engine</h3>
-                <p>ML-powered forecasting from IoT sensor data</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">💰</div>
-                <h3>Auto Finance</h3>
-                <p>Intelligent calculation of revenue, tax & profitability</p>
-            </div>
+            <footer>
+                <p>© 2025 AiGrow • Redefining Business Intelligence</p>
+            </footer>
         </div>
 
-        <footer>
-            <p>© 2025 AiGrow • Redefining Business Intelligence</p>
-        </footer>
+        <!-- Database Solutions Page -->
+        <div class="page" id="solutionsPage">
+            <header>
+                <div class="logo-container">
+                    <h1>💾 Database Solution</h1>
+                </div>
+                <p class="tagline">Direct Database Integration</p>
+            </header>
+
+            <div class="solutions-content">
+                <div class="solution-step">
+                    <span class="step-number">1</span>
+                    <h2>Local Processing</h2>
+                    <h3>Python Script / Server (running YOLO)</h3>
+                    <p>Continuously pulls the Dahua camera's RTSP stream and runs YOLO inference on each frame.</p>
+                    <p>The system operates in real-time, processing video feeds 24/7 to detect objects of interest with minimal latency.</p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-number">2</span>
+                    <h2>Event Trigger</h2>
+                    <h3>Python Script</h3>
+                    <p>When the YOLO model detects your target object, the script is triggered. It captures the full frame and/or the cropped snapshot.</p>
+                    <p>Detection thresholds can be customized based on confidence scores to minimize false positives and ensure accurate plant health assessment.</p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-number">3</span>
+                    <h2>Data Structuring</h2>
+                    <h3>Python Script</h3>
+                    <p>It compiles the event metadata into a structured format (usually JSON):</p>
+                    <ul>
+                        <li><strong>Timestamp</strong> - Exact date and time of detection</li>
+                        <li><strong>Camera ID</strong> - Unique identifier for multi-camera setups</li>
+                        <li><strong>Object Class</strong> - Type of plant or issue detected</li>
+                        <li><strong>Confidence Score</strong> - Model certainty percentage</li>
+                        <li><strong>Bounding Box Coordinates</strong> - Precise location in frame</li>
+                    </ul>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-number">4</span>
+                    <h2>Pushing Data</h2>
+                    <h3>Python Script (Database Connector)</h3>
+                    <p><strong>1. Metadata:</strong> The script uses a database connector (e.g., <code>psycopg2</code> for PostgreSQL, <code>mysql.connector</code> for MySQL, or the <code>sqlite3</code> library for a local file-based DB) to INSERT the JSON metadata into a table.</p>
+                    <p><strong>2. Snapshot File:</strong> It uploads the saved snapshot JPEG/PNG file to your server's file storage (like an S3 bucket, a mounted NAS, or a simple directory) and stores the resulting file path or URL in the same database record.</p>
+                    <p>This dual approach ensures both quick metadata queries and efficient image retrieval for analysis and reporting.</p>
+                </div>
+            </div>
+
+            <button class="back-button" onclick="showHome()">← Back to Home</button>
+        </div>
+
+        <!-- n8n Solutions Page -->
+        <div class="page" id="n8nPage">
+            <header>
+                <div class="logo-container">
+                    <h1>🔄 n8n Workflow</h1>
+                </div>
+                <p class="tagline">Automated Workflow Integration</p>
+            </header>
+
+            <div class="solutions-content">
+                <div class="solution-step">
+                    <span class="step-number">1</span>
+                    <h2>Local Processing</h2>
+                    <h3>Python Script / Server (running YOLO)</h3>
+                    <p>Same as above: pulls RTSP, runs inference, and captures the snapshot.</p>
+                    <p>The system continuously monitors the camera feed and processes each frame through the YOLO model to detect target objects in real-time.</p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-number">2</span>
+                    <h2>n8n Setup</h2>
+                    <h3>n8n Workflow</h3>
+                    <p>You start a new n8n workflow with a <strong>Webhook Trigger</strong> node. This node generates a unique URL that waits for incoming data.</p>
+                    <p>The webhook acts as the entry point for your automation, allowing external systems to trigger complex workflows with a simple HTTP request.</p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-number">3</span>
+                    <h2>Triggering n8n</h2>
+                    <h3>Python Script (HTTP Request)</h3>
+                    <p>When YOLO detects an object, the script performs an <strong>HTTP POST request</strong> to the n8n Webhook URL.</p>
+                    <ul>
+                        <li>The JSON metadata is sent in the request body</li>
+                        <li>The snapshot image data is sent as a <strong>Base64 string</strong></li>
+                        <li>Headers include content-type and authentication tokens</li>
+                    </ul>
+                    <p>This approach ensures secure, reliable data transmission between your detection system and automation workflow.</p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-number">4</span>
+                    <h2>Workflow Execution</h2>
+                    <h3>n8n Workflow</h3>
+                    <p>The Webhook node receives the data, which triggers the rest of the workflow:</p>
+                    <ul>
+                        <li><strong>1. File Write Node:</strong> Decodes the Base64 image and saves the snapshot to your file storage (local directory, S3, or NAS).</li>
+                        <li><strong>2. Database Node:</strong> Inserts the metadata into your server database (PostgreSQL, MySQL, MongoDB).</li>
+                        <li><strong>3. Notification Node:</strong> Sends an alert (e.g., to Telegram, Slack, or Email) with the snapshot attached and the metadata in the message.</li>
+                    </ul>
+                    <p>All three operations run in parallel for maximum efficiency, ensuring instant notifications while maintaining data integrity.</p>
+                </div>
+
+                <div class="solution-step" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); border-color: rgba(102, 126, 234, 0.3);">
+                    <h2>✨ Why Choose n8n?</h2>
+                    <ul>
+                        <li><strong>No-Code Interface:</strong> Build complex workflows visually without writing integration code</li>
+                        <li><strong>300+ Integrations:</strong> Connect to databases, cloud storage, messaging apps, and more</li>
+                        <li><strong>Error Handling:</strong> Built-in retry mechanisms and error notifications</li>
+                        <li><strong>Scalability:</strong> Handle thousands of events per hour with ease</li>
+                        <li><strong>Self-Hosted:</strong> Full control over your data and workflows</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="back-button" onclick="showHome()">← Back to Home</button>
+        </div>
     </div>
 
     <script>
@@ -327,6 +583,25 @@
                 card.style.transform = '';
             });
         });
+
+        // Page navigation
+        function showSolutions() {
+            document.getElementById('homePage').classList.remove('active');
+            document.getElementById('n8nPage').classList.remove('active');
+            document.getElementById('solutionsPage').classList.add('active');
+        }
+
+        function showN8nSolutions() {
+            document.getElementById('homePage').classList.remove('active');
+            document.getElementById('solutionsPage').classList.remove('active');
+            document.getElementById('n8nPage').classList.add('active');
+        }
+
+        function showHome() {
+            document.getElementById('solutionsPage').classList.remove('active');
+            document.getElementById('n8nPage').classList.remove('active');
+            document.getElementById('homePage').classList.add('active');
+        }
     </script>
 </body>
 </html>
